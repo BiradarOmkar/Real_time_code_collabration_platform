@@ -37,17 +37,10 @@ io.on("connection",(socket)=>{
                   // send message to everyone in room
                   io.to(sessionId).emit("message",{user,text});
           })
-
           // on disconnect
             socket.on("disconnect", () => console.log("User disconnected:", socket.id));
       })
 })
-
-
-
-
-
-
 
 const ServerListen=async()=>{
      try{
@@ -59,7 +52,6 @@ const ServerListen=async()=>{
             console.log("Server Failed",e.message);
      }
 }
-
 ServerListen()
 
 

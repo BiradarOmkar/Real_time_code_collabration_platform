@@ -15,7 +15,6 @@ function CandidatePage() {
         console.log("Server Error");
       }
     };
-
     fetchInterviews();
   }, []);
 
@@ -31,12 +30,11 @@ const handlejoinbutton=(sessionCode)=>{
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Interviewer Dashboard
+            Candidate DashBoard
         </h1>
 
         {/* Stats Cards */}
@@ -107,28 +105,27 @@ const handlejoinbutton=(sessionCode)=>{
                       {i.status}
                     </span>
                   </td>
-                     <td>
+                  <td className="px-6 py-4">
                     {(() => {
-                      const interviewTime = Date(i.scheduledAt);
-                      const now=new Date();
+                      const interviewTime = new Date(i.scheduledAt);
+                      const now = new Date();
                       const canJoin =
                         (i.status === "scheduled" || i.status === "ongoing") &&
-                        now >= new Date(interviewTime.scheduledAt - 5 * 60000);
-                        return(
-                           <button
-                            onClick={()=>handlejoinbutton(i.sessionCode)}
-                           >
-            {/* //                disabled={!canJoin}
-            //                className={
-            //                 `bg-blue-500 text-white px-4 py-2 m-3 rounded-lg text-sm hover:bg-blue-600 transition ${canJoin ? "bg-blue-500 text-white hover:bg-blue-600"
-            // : "bg-gray-200 text-gray-400 cursor-not-allowed"}`
-            //                }> */}
-                              
-                              join
-                           </button>
-                        )
-                    })
-                    ()}
+                        now >= new Date(interviewTime.getTime() - 5 * 60000);
+                      return (
+                        <button
+                          disabled={!canJoin}
+                          onClick={() => handlejoinbutton(i.sessionCode)}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                            canJoin
+                              ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md cursor-pointer"
+                              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          }`}
+                        >
+                          Join Session
+                        </button>
+                      );
+                    })()}
                   </td>
                 </tr>
               ))}

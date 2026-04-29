@@ -3,7 +3,7 @@ import cors from 'cors'
 import Authroute from './routes/AuthRoutes.js'
 import UserRoutes from './routes/UserRoutes.js'
 import cookieParser from 'cookie-parser'
-
+import LiveKitRoutes from './routes/LiveKitRoutes.js'
 // import { log } from 'console'
 // import { text } from 'stream/consumers'
 const app=express()
@@ -40,5 +40,6 @@ app.get("/",(req,res)=>{
 })
 app.use("/api/auth",Authroute)
 app.use("/api",UserRoutes);
+app.use("/api/livekit", LiveKitRoutes);
 
 export default app;

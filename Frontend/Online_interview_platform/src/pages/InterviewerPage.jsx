@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate ,useNavigate} from "react-router-dom";
 function InterviewerPage() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [interviews, setInterviews] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function InterviewerPage() {
         const data = await res.json();
         setInterviews(data.data);
         console.log(data.data);
-        
+
       } catch (e) {
         console.log("Server Error");
       }
@@ -24,11 +24,11 @@ function InterviewerPage() {
   const completed = interviews.filter((i) => i.status === "completed").length;
   const scheduled = interviews.filter((i) => i.status === "scheduled").length;
 
-// handle Join button
-const handlejoinbutton=(Session_id)=>{
-  console.log("button Clicked",Session_id);
-  navigate(`/interview-session/${Session_id}`)
-}
+  // handle Join button
+  const handlejoinbutton = (Session_id) => {
+    console.log("button Clicked", Session_id);
+    navigate(`/interview-session/${Session_id}`)
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-9">
@@ -97,39 +97,37 @@ const handlejoinbutton=(Session_id)=>{
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold
-                      ${
-                        i.status === "completed"
+                      ${i.status === "completed"
                           ? "bg-green-100 text-green-700"
                           : i.status === "scheduled"
                             ? "bg-yellow-100 text-yellow-700"
                             : "bg-red-100 text-red-700"
-                      }`}
+                        }`}
                     >
                       {i.status}
                     </span>
                   </td>
-                   <td>
+                  <td className="px-6 py-4">
                     {(() => {
-                      const interviewTime = Date(i.scheduledAt);
-                      const now=new Date();
+                      const interviewTime = new Date(i.scheduledAt);
+                      const now = new Date();
                       const canJoin =
                         (i.status === "scheduled" || i.status === "ongoing") &&
-                        now >= new Date(interviewTime.scheduledAt - 5 * 60000);
-                        return(
-                           <button 
-            //                disabled={!canJoin}
-            //                className={
-            //                 `bg-blue-500 text-white px-4 py-2 m-3 rounded-lg text-sm hover:bg-blue-600 transition ${canJoin ? "bg-blue-500 text-white hover:bg-blue-600"
-            // : "bg-gray-200 text-gray-400 cursor-not-allowed"}`
-            //                }
-            className="bg-blue-500 text-white px-4 py-1 m-4 rounded-2xl cursor-pointer"
-                           onClick={()=>handlejoinbutton(i.sessionCode)}
-                           >
-                              join
-                           </button>
-                        )
-                    })
-                    ()}
+                        now >= new Date(interviewTime.getTime() - 5 * 60000);
+                      return (
+                        <button
+                          disabled={!canJoin}
+                          onClick={() => handlejoinbutton(i.sessionCode)}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                            canJoin
+                              ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md cursor-pointer"
+                              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          }`}
+                        >
+                          Join Session
+                        </button>
+                      );
+                    })()}
                   </td>
                   {/* <td className="px-6 py-4">
                     <button className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition">

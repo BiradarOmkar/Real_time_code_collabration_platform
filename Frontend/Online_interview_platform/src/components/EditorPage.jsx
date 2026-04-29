@@ -1,19 +1,16 @@
 import React from 'react'
 import Editor from "@monaco-editor/react";
 
-function EditorPage() {
-  const handlechange=(value)=>{
-     console.log(value);
-  }
+function EditorPage({code,setCode}) {
   return (
       <Editor
         height="100%"
         defaultLanguage="javascript"
       defaultValue="// start coding..."
       theme="vs-dark"
-      onChange={handlechange}
+      value={code}
+      onChange={(val)=>setCode(val)}
       />
   )
 }
-
 export default EditorPage

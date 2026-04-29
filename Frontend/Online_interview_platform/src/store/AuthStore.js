@@ -10,11 +10,9 @@ export const useAuthStore=create(
         console.log("Storing user data in state");
        set({user:userData})
     },
-
     logout:()=>{
         set({
             user:null,
         })
     }
-
 })))
